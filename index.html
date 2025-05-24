@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Chấm công nhân viên</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 40px; }
+    button { padding: 10px 20px; margin: 5px; font-size: 16px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h2>Chấm công nhân viên</h2>
+  <div id="employees"></div>
+  <p id="status"></p>
+
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwTDRBmPGiHLNa7JnibJx4XltEGWmF_2T3TrRAOuMIoRDczW0l8X21kH-MSFSD3HfkS/exec'; // Dán URL từ bước trên
+
+    const employees = ["Nguyễn Văn A", "Trần Thị B", "Lê Văn C"];
+
+    const container = document.getElementById("employees");
+    employees.forEach(name => {
+      const btn = document.createElement("button");
+      btn.textContent = `Chấm công: ${name}`;
+      btn.onclick = () => {
+        fetch(scriptURL, {
+          method: 'POST',
+          body: JSON.stringify({ name }),
+          headers: { 'Content-Type': 'application/json' }
+        })
+        .then(() => document.getElementById("status").textContent = `✅ Đã chấm công cho ${name}`)
+        .catch(err => document.getElementById("status").textContent = "❌ Lỗi khi gửi dữ liệu");
+      };
+      container.appendChild(btn);
+    });
+  </script>
+</body>
+</html>
