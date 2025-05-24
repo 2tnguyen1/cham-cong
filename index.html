@@ -23,14 +23,16 @@
       const btn = document.createElement("button");
       btn.textContent = `Chấm công: ${name}`;
       btn.onclick = () => {
-        fetch(scriptURL, {
-          method: 'POST',
-          body: JSON.stringify({ name }),
-          headers: { 'Content-Type': 'application/json' }
-        })
-        .then(() => document.getElementById("status").textContent = `✅ Đã chấm công cho ${name}`)
-        .catch(err => document.getElementById("status").textContent = "❌ Lỗi khi gửi dữ liệu");
-      };
+  const formData = new FormData();
+  formData.append("name", name);
+
+  fetch(scriptURL, {
+    method: 'POST',
+    body: formData,
+  })
+  .then(() => document.getElementById("status").textContent = `✅ Đã chấm công cho ${name}`)
+  .catch(err => document.getElementById("status").textContent = "❌ Lỗi khi gửi dữ liệu");
+};
       container.appendChild(btn);
     });
   </script>
